@@ -55,7 +55,7 @@ osg::ref_ptr<osg::Group> createPagedLOD(int row, int col)
         {
             osg::ref_ptr<osg::PagedLOD> lod = new osg::PagedLOD;
             lod->setCenter(osg::Vec3(i * offsets, j * offsets, 0.0));
-            //lod->addChild(createBox(osg::Vec3(i * offset, j * offset, 0.0), 1), 300.0, 1000.0f);
+            //lod->addChild(createBox(osg::Vec3(i * offsets, j * offsets, 0.0), 1), 300.0, 1000.0f);
             osg::ref_ptr<osg::PositionAttitudeTransform> posNode=new osg::PositionAttitudeTransform;
             posNode->addChild(g_proxyNode);
             posNode->setPosition(osg::Vec3(i * offsets, j * offsets, 0.0));
@@ -111,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent)
     options->setOptionString("inlineExternalReferencesInIVEFile");
     options->setOptionString("OutputTextureFiles");
 
-    const std::string filename("G:/OSG/OpenSceneGraph-Data/mySource/trees11/Group3.3ds");
+    const std::string filename("F:/OSG/Test/TestPageLod/trees11/Group3.3ds");
     osg::ref_ptr<osg::Node> node=osgDB::readNodeFile(filename,options);
     g_proxyNode=new osg::ProxyNode;
     g_proxyNode->addChild(node,filename);
@@ -231,6 +231,11 @@ void MainWindow::on_actionBig_Scene_triggered()
         time->stop();
         time->deleteLater();
         m_ptrView->setSceneData(g_root);
+
+        osgDB::DatabasePager* pager = m_ptrView->getDatabasePager();
+        pager->setDoPreCompile(true);
+        pager->setTargetMaximumNumberOfPageLOD(10);
+
         pProgressBar->setValue(pProgressBar->maximum());
     });
     time->start();

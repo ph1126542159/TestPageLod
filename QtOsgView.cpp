@@ -28,9 +28,10 @@ QtOsgView::QtOsgView(QWidget *parent)
     getCamera()->setViewport(new osg::Viewport(0,0,width(),height()));
     getCamera()->setProjectionMatrixAsPerspective(30,static_cast<double>(width()) / static_cast<double>(height()), 1.0f, 10000.0f);
     getCamera()->setGraphicsContext(getGraphicsWindow());
-    setThreadingModel(osgViewer::Viewer::SingleThreaded);
+    setThreadingModel(osgViewer::Viewer::DrawThreadPerContext);
     setRealizeOperation(new SysncOperation());
-
+    osg::DisplaySettings::instance()->setNumOfDatabaseThreadsHint(4);
+    osg::DisplaySettings::instance()->setMaxTexturePoolSize(64000);
     m_dStrTime=0;
     m_dEndTime=0;
     m_dSleepTime=10;

@@ -42,7 +42,7 @@ void AdapterWidget::mousePressEvent(QMouseEvent* event)
     case(Qt::LeftButton) :
         button = 1;
         break;
-    case (Qt::MidButton) :
+    case (Qt::MiddleButton) :
         button = 2;
         break;
     case (Qt::RightButton) :
@@ -67,7 +67,7 @@ void AdapterWidget::mouseReleaseEvent(QMouseEvent* event)
     case(Qt::LeftButton) :
         button = 1;
         break;
-    case(Qt::MidButton) :
+    case(Qt::MiddleButton) :
         button = 2;
         break;
     case(Qt::RightButton) :
@@ -91,5 +91,5 @@ void  AdapterWidget::mouseMoveEvent(QMouseEvent* event)
 
 void AdapterWidget::wheelEvent(QWheelEvent* event)
 {
-    m_ptrGw->getEventQueue()->mouseScroll(event->delta() > 0 ? osgGA::GUIEventAdapter::SCROLL_UP : osgGA::GUIEventAdapter::SCROLL_DOWN);
+    m_ptrGw->getEventQueue()->mouseScroll((event->angleDelta().y()>0) ? osgGA::GUIEventAdapter::SCROLL_UP : osgGA::GUIEventAdapter::SCROLL_DOWN);
 }
